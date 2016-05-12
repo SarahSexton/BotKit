@@ -1,27 +1,32 @@
 var Botkit = require('botkit');
 var builder = require('botbuilder');
 
-var controller = Botkit.slackbot({debug: false});
+var controller = Botkit.slackbot({ debug: false });
+
+var Wunderground = require('wundergroundnode');
+var myKey = '4d4516107fb8cea7';
+var wunderground = new Wunderground(myKey);
+
 
 var bot = controller.spawn({
   token: 'xoxb-38628238758-ypaqFFvip3ObiT6GdqVukOQR',
 }).startRTM()
 
-controller.hears('hello',['direct_message','direct_mention','mention'],function(bot,message) {
+controller.hears('weather', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
+  wunderground.conditions().request('60613', function (err, response) {
+    console.log(response);
+    bot.reply(message, 'The temperature is ' + response.current_observation.temp_f + ' degrees F.');
+  });
 
-  bot.reply(message,'Hello yourself.');
+controller.hears('thank', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
 
+    bot.reply(message, 'I live to serve.');
+});
 });
 
-var slackBot = new builder.SlackBot(controller, bot);
-slackBot.add('/', function (session) {
-   session.send('Hello World'); 
-});
+//var slackBot = new builder.SlackBot(controller, bot);
+//slackBot.add('/', function (session) {
+//  session.send('Hello World');
+//});
 
-slackBot.listenForMentions();
-
-bot.startRTM(function(err,bot,payload) {
-  if (err) {
-    throw new Error('Could not connect to Slack');
-  }
-});
+//slackBot.listenForMentions();
