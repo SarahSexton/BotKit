@@ -3,13 +3,13 @@ var builder = require('botbuilder');
 var controller = Botkit.slackbot({ debug: false });
 var Wunderground = require('wundergroundnode');
 
-var weatherKey = provess.env.WEATHER_KEY || "Missing weather API key"; 
+var weatherKey = process.env.WEATHER_KEY || "Missing weather API key"; 
 var wunderground = new Wunderground(weatherKey);
 
-var slackToken = provess.env.SLACK_TOKEN || "Missing Slack Token";
+var slackToken = process.env.SLACK_TOKEN || "Missing Slack Token";
 
 var bot = controller.spawn({
-  token: provess.env.SLACK_TOKEN || "Missing Slack Token",
+  token: process.env.SLACK_TOKEN || "Missing Slack Token",
 }).startRTM()
 
 controller.hears('weather', ['direct_message', 'direct_mention', 'mention'], function (bot, message) 
