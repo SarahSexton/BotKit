@@ -20,7 +20,6 @@ controller.hears('weather', ['direct_message', 'direct_mention', 'mention'], fun
     bot.reply(message, "It's *" + response.current_observation.weather + '* out right now, and'
     + ' the temperature is ' + response.current_observation.temp_f + ' degrees F. ' + 
     ' It feels like ' + response.current_observation.feelslike_f + ' F out there.');
-    //bot.reply(message, '');
   });
   controller.hears('thank', ['direct_message', 'direct_mention', 'mention'], function (bot, message) 
   {
